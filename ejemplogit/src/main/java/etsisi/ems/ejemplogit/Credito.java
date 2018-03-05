@@ -7,6 +7,7 @@ public class Credito extends Tarjeta {
 	protected double mCredito;
 	protected Vector<Movimiento> mMovimientos;
 	static final double COMISION = 0.05;
+	static final double COMISIONMINIMA = 3;
 
 	public Credito(String numero, String titular, LocalDate fechaCaducidad, double credito) {
 		super(numero, titular, fechaCaducidad);
@@ -19,7 +20,7 @@ public class Credito extends Tarjeta {
 		m.setConcepto("Retirada en cuenta asociada (cajero automático)");
 		// x=(x*0.05<3.0 ? 3 : x*0.05); // Añadimos una comisión de un 5%, mínimo de 3 euros.
 		// m.setImporte(x);
-		double comision = (x * COMISION < 3.0 ? 3 : x * COMISION); // Añadimos una comisión de un 5%, mínimo de 3 euros.
+		double comision = (x * COMISION < COMISIONMINIMA ? COMISIONMINIMA : x * COMISION); // Añadimos una comisión de un 5%, mínimo de 3 euros.
 		m.setImporte(x + comision);
 		mMovimientos.addElement(m);
 		if (x > getCreditoDisponible())
